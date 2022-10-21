@@ -192,7 +192,6 @@ def concatenate_nifti(subid, fmridir, outputdir, ses=None, work_dir=None):
     """
     # files to be concatenated
     datafile = [
-        '_desc-filtered_motion.tsv',  # Must come first to set motion_suffix
         '_desc-denoised_bold.nii.gz',
         '_desc-denoisedSmoothed_bold.nii.gz',
         '_atlas-Glasser_timeseries.tsv',
@@ -208,6 +207,7 @@ def concatenate_nifti(subid, fmridir, outputdir, ses=None, work_dir=None):
         '_atlas-Schaefer517_timeseries.tsv',
         '_atlas-Schaefer1017_timeseries.tsv',
         '_atlas-subcortical_timeseries.tsv',
+        '_desc-filtered_motion.tsv',
     ]
 
     if ses is None:
@@ -408,7 +408,6 @@ def concatenate_cifti(subid, fmridir, outputdir, ses=None, work_dir=None):
         Working directory, if available. Default is None.
     """
     datafile = [
-        '_desc-filtered_motion.tsv',  # Must come first to set motion_suffix
         '_desc-denoised_bold.dtseries.nii',
         '_desc-denoisedSmoothed_bold.dtseries.nii',
         '_atlas-Glasser_den-91k_timeseries.ptseries.nii',
@@ -424,6 +423,7 @@ def concatenate_cifti(subid, fmridir, outputdir, ses=None, work_dir=None):
         '_atlas-Schaefer917_den-91k_timeseries.ptseries.nii',
         '_atlas-Schaefer1017_den-91k_timeseries.ptseries.nii',
         '_atlas-subcortical_den-91k_timeseries.ptseries.nii',
+        '_desc-filtered_motion.tsv',
     ]
 
     if ses is None:
@@ -555,8 +555,8 @@ def concatenate_cifti(subid, fmridir, outputdir, ses=None, work_dir=None):
             f'{concatenated_filename_base}_desc-postcarpetplot_bold.svg',
         )
 
-        raw_dvars = np.array(raw_dvars).flatten()
-        regressed_dvars = np.array(regressed_dvars).flatten()
+        raw_dvars = np.concatenate([a.ravel() for a in raw_dvars])
+        regressed_dvars = np.concatenate([a.ravel() for a in regressed_dvars])
         plot_svgx(
             rawdata=rawdata,
             regressed_data=f'{concatenated_file_base}_desc-denoised_bold.dtseries.nii',
