@@ -507,7 +507,7 @@ def plot_svgx(rawdata,
 
     # Formatting & setting of files
     sns.set_style('whitegrid')
-    regressed_dvars_data = regressed_dvars
+    # regressed_dvars_data = regressed_dvars
     residual_dvars_data = filtered_dvars
     raw_dvars_data = raw_dvars
     # Load files
@@ -521,12 +521,12 @@ def plot_svgx(rawdata,
         raw_dvars_data = raw_dvars_data[0:len(residual_dvars_data)]
         raw_data = raw_data[:, 0:len(residual_dvars_data)]
         # TODO: Figure out how to slice the regressed DVARS instead of just overwriting it
-        regressed_dvars_data = raw_dvars_data
+        # regressed_dvars_data = raw_dvars_data
 
     # Create dataframes for the bold_data DVARS, FD
     DVARS_timeseries = pd.DataFrame({
         'Pre regression': raw_dvars_data,
-         # 'Post regression': regressed_dvars_data,
+        # 'Post regression': regressed_dvars_data,
         'Post all': residual_dvars_data
     })
 
